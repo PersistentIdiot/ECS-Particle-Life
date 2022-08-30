@@ -18,6 +18,8 @@ namespace _ParticleLife.Core.Runtime {
         public List<int> Particles;
         public List<ParticleView> ParticleViews;
         public ParticleColors ParticleColors;
+        public float AnnealingFactor;
+        public float ColorForceMultiplier;
 
         public SharedData(Bounds _bounds, ParticleColors _particleColors) {
             Bounds = _bounds;

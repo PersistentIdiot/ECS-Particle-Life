@@ -10,7 +10,9 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
         public Bounds bounds;
         [SerializeField] private int numberOfParticles = 10;
         [SerializeField] private int particleColors = 5;
-
+        [SerializeField] private ParticleColors Colors;
+        [SerializeField] private float AnnealingFactor = 1;
+        [SerializeField] private float ColorForceMultiplier = 1;
 
         [FormerlySerializedAs("ParticlePrefab")]
         [Header("References")]
@@ -25,13 +27,18 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
         public void Init() {
             Debug.Log($"{nameof(ECSAspect)}.{nameof(Init)}()");
 
+            Colors = new ParticleColors(5, ForceInitializer);
             // Setup sharedData
-            sharedData = new SharedData(bounds, new ParticleColors(5, ForceInitializer));
+            sharedData = new SharedData(bounds, Colors);
+            sharedData.AnnealingFactor = AnnealingFactor;
+            sharedData.ColorForceMultiplier = ColorForceMultiplier;
 
             // Setup ECSWorld, add systems but wait to initialize them
             World = new EcsWorld();
             Systems = new EcsSystems(World, shared: sharedData).Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
-            .Add(new ParticleAttractionSystem());
+            .Add(new ParticleAttractionSystem())
+            .Add(new ParticleAnnealingSystem())
+            .Add(new ParticleBoundsSystem());
 
             // Spawn particles before init because systems' init will rely on particles existing
             SpawnParticles();
@@ -47,7 +54,9 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
                 }
             }
         }
-
+        void Update () {
+            Systems?.Run (); // throws NullReferenceException() here.
+        }
 
         private void SpawnParticles() {
             // Setup pools used for setting up particle components
@@ -72,6 +81,8 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
                 ref ECSParticle particle = ref particlePool.Add(entity);
                 ref ECSVelocity ecsVelocity = ref velocityPool.Add(entity);
                 //ecsVelocity.Velocity = -randomPosition;
+                ecsTransform.Position = randomPosition;
+                particle.Color = Random.Range(0, particleColors);
 
                 // Spawn and setup view
                 var particleView = Instantiate(particlePrefab, particleContainer == null ? transform : particleContainer);
