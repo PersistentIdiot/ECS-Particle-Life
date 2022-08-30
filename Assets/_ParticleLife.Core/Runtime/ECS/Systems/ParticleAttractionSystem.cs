@@ -27,22 +27,25 @@ namespace _ParticleLife.Core.Runtime {
                 ref ECSParticle thisParticle = ref particlePool.Get(_sharedData.Particles[i]);
                 ref ECSVelocity thisVelocity = ref velocityPool.Get(_sharedData.Particles[i]);
                 for (int j = 0; j < _sharedData.Particles.Count; j++){
-                    if (i == j) continue;
+                    //if (i == j) continue;
                     //Debug.Log($"{nameof(ParticleAttractionSystem)}.{nameof(Run)}() - i,j: ({i},{j})");
                     //Get otherParticle references
                     ref ECSTransform otherTransform = ref transformPool.Get(_sharedData.Particles[j]);
                     ref ECSParticle otherParticle = ref particlePool.Get(_sharedData.Particles[j]);
 
                     //Setup for calculation
-                    Vector3 direction = otherTransform.Position - thisTransform.Position;
                     float distance = Vector3.Distance(thisTransform.Position, otherTransform.Position);
-                    Debug.Assert(distance != 0);
+                    if (distance != 0){
 
-                    float colorForce =
-                    _sharedData.ColorForceMultiplier * _sharedData.ParticleColors.Forces[thisParticle.Color][otherParticle.Color];
 
-                    // Calculate and apply velocity change
-                    thisVelocity.Velocity += ((1 / distance * distance) * colorForce * direction * Time.deltaTime);
+                        Vector3 direction = otherTransform.Position - thisTransform.Position;
+
+                        float colorForce = _sharedData.ColorForceMultiplier *
+                                           _sharedData.ParticleColors.Forces[thisParticle.Color][otherParticle.Color];
+
+                        // Calculate and apply velocity change
+                        thisVelocity.Velocity += ((1 / distance * distance) * colorForce * direction * Time.deltaTime);
+                    }
                 }
 
                 //thisVelocity.Velocity = Vector3.one;

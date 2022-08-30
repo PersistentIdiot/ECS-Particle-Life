@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &223675108
 Transform:
   m_ObjectHideFlags: 0
@@ -259,8 +259,12 @@ MonoBehaviour:
     yMax: 50
     zMin: -50
     zMax: 50
-  numberOfParticles: 500
+  numberOfParticles: 100
   particleColors: 5
+  Colors:
+    ColorCount: 0
+  AnnealingFactor: 1
+  ColorForceMultiplier: 10000
   particlePrefab: {fileID: 2520758332417174460, guid: f011ddf86eed08947aad29cf6dca747d, type: 3}
   particleContainer: {fileID: 903782756}
 --- !u!114 &241552312
@@ -401,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &611692003
 Transform:
   m_ObjectHideFlags: 0
@@ -548,7 +552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &727626169
 Transform:
   m_ObjectHideFlags: 0
@@ -646,7 +650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &872862715
 Transform:
   m_ObjectHideFlags: 0
@@ -775,7 +779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1024815880
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,7 +1037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2057087842
 Transform:
   m_ObjectHideFlags: 0

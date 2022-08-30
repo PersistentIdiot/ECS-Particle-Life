@@ -38,8 +38,8 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
             Systems = new EcsSystems(World, shared: sharedData)
             .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
             .Add(new ParticleAttractionSystem())
-            .Add(new ParticleAnnealingSystem());
-            //.Add(new ParticleBoundsSystem());
+            //.Add(new ParticleAnnealingSystem());
+            .Add(new ParticleBoundsSystem());
 
             // Spawn particles before init because systems' init will rely on particles existing
             SpawnParticles();
@@ -51,12 +51,12 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
         private void ForceInitializer(float[][] forces) {
             for (int i = 0; i < forces.Length; i++){
                 for (int j = 0; j < forces.Rank; j++){
-                    forces[i][j] = UnityEngine.Random.Range(-1, 1);
+                    forces[i][j] = UnityEngine.Random.Range(-10, 10);
                 }
             }
         }
 
-        void Update() {
+        void FixedUpdate() {
             Systems?.Run(); // throws NullReferenceException() here.
         }
 
