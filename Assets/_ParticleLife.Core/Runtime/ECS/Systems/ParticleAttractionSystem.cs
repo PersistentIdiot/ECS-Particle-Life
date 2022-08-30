@@ -42,7 +42,7 @@ namespace _ParticleLife.Core.Runtime {
                     _sharedData.ColorForceMultiplier * _sharedData.ParticleColors.Forces[thisParticle.Color][otherParticle.Color];
 
                     // Calculate and apply velocity change
-                    thisVelocity.Velocity += (1 / distance * distance) * colorForce * direction * Time.deltaTime;
+                    thisVelocity.Velocity += ((1 / distance * distance) * colorForce * direction * Time.deltaTime);
                 }
 
                 //thisVelocity.Velocity = Vector3.one;

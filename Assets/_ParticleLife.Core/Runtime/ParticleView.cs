@@ -22,7 +22,7 @@ namespace _ParticleLife.Core.Runtime {
         private void LateUpdate() {
             ref ECSVelocity velocityComponent = ref velocityPool.Get(Entity);
             ref ECSTransform transformComponent = ref transformPool.Get(Entity);
-            Rigidbody.velocity = velocityComponent.Velocity;
+            Rigidbody.velocity = velocityComponent.Velocity.normalized;
             transformComponent.Position = transform.position;
         }
     }

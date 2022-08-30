@@ -35,10 +35,11 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
 
             // Setup ECSWorld, add systems but wait to initialize them
             World = new EcsWorld();
-            Systems = new EcsSystems(World, shared: sharedData).Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+            Systems = new EcsSystems(World, shared: sharedData)
+            .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
             .Add(new ParticleAttractionSystem())
-            .Add(new ParticleAnnealingSystem())
-            .Add(new ParticleBoundsSystem());
+            .Add(new ParticleAnnealingSystem());
+            //.Add(new ParticleBoundsSystem());
 
             // Spawn particles before init because systems' init will rely on particles existing
             SpawnParticles();
@@ -54,8 +55,9 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
                 }
             }
         }
-        void Update () {
-            Systems?.Run (); // throws NullReferenceException() here.
+
+        void Update() {
+            Systems?.Run(); // throws NullReferenceException() here.
         }
 
         private void SpawnParticles() {
@@ -84,11 +86,15 @@ namespace _ParticleLife.Core.Runtime.GameAspects {
                 ecsTransform.Position = randomPosition;
                 particle.Color = Random.Range(0, particleColors);
 
+
                 // Spawn and setup view
                 var particleView = Instantiate(particlePrefab, particleContainer == null ? transform : particleContainer);
                 sharedData.ParticleViews.Add(particleView);
                 particleView.Entity = entity;
                 particleView.transform.position = randomPosition;
+
+                // Bind the entity's particle component to the view for updating later
+                particle.ParticleView = particleView;
                 //particleView.Rigidbody.velocity = -randomPosition;
             }
 
